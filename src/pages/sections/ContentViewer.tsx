@@ -7,8 +7,9 @@ import {
   Text,
   Flex,
   Avatar,
+  Button,
 } from "@chakra-ui/react";
-import { ChatIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import { ChatIcon, ArrowUpIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { capitalizeString } from "../../utils/common";
 
 interface ContentViewerProps {
@@ -21,7 +22,13 @@ interface ContentViewerProps {
   subreddit: string;
 }
 
-function ContentViewer({ post }: { post: ContentViewerProps }) {
+function ContentViewer({
+  post,
+  onClose,
+}: {
+  post: ContentViewerProps;
+  onClose?: any;
+}) {
   return (
     <Stack
       background="whiteAlpha.900"
@@ -31,6 +38,21 @@ function ContentViewer({ post }: { post: ContentViewerProps }) {
       border="1px"
       borderColor="gray.200"
     >
+      <Flex
+        width="100%"
+        justify="flex-end"
+        display={{ base: "flex", md: "none" }}
+      >
+        <Button
+          justifySelf="flex-end"
+          leftIcon={<SmallCloseIcon />}
+          colorScheme="red"
+          variant="outline"
+          onClick={onClose}
+        >
+          Close
+        </Button>
+      </Flex>
       <Flex direction="row" align="center">
         <Avatar name={post.author} size="sm" />
         <Text color="gray.500" padding={2} fontSize="sm">

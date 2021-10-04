@@ -54,9 +54,10 @@ export const slice: any = createSlice({
       return {
         ...state,
         selectedPost: payload,
-        readPosts: !state.readPosts.includes(payload.id)
-          ? [...state.readPosts, payload.id]
-          : state.readPosts,
+        readPosts:
+          payload && !state.readPosts.includes(payload.id)
+            ? [...state.readPosts, payload.id]
+            : state.readPosts,
       };
     },
     dismissPost(

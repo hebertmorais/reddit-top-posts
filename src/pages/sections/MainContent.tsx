@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import ContentViewer from "./ContentViewer";
 import PostsList from "./PostsList";
-import { postsSelector } from "../../redux/postsSlice";
-import { useSelector } from "react-redux";
+import { postsSelector, selectPost } from "../../redux/postsSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 function MainContent() {
   const { selectedPost } = useSelector(postsSelector);
-  useEffect(() => console.log(selectedPost), [selectedPost]);
+  const dispatch = useDispatch();
+
   return (
     <Flex width={{ base: "100%", lg: "1200px" }} height="100%">
       <Box width={{ base: "100%", lg: "65%" }} margin={4} padding={4}>
@@ -22,7 +23,12 @@ function MainContent() {
           position={{ base: "absolute", lg: "initial" }}
           margin={4}
         >
-          <ContentViewer post={selectedPost} />
+          <ContentViewer
+            post={selectedPost}
+            onClose={() => {
+              dispatch(selectPost(null));
+            }}
+          />
         </Box>
       )}
     </Flex>
