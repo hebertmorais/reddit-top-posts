@@ -16,10 +16,18 @@ export const slice: any = createSlice({
   initialState: {
     currentPage: 1,
     posts: [],
+    isLoading: false,
+    isError: false,
     selectedPost: null,
   },
   reducers: {
-    loadNexPostsPage(
+    loadNextPostsRequest(state: ReturnType<typeof slice.initialState>) {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    },
+    loadNextPostsPageSuccess(
       state: ReturnType<typeof slice.initialState>,
       { payload }: { payload: PostType[] }
     ) {
@@ -27,6 +35,18 @@ export const slice: any = createSlice({
         ...state,
         currentPage: state.currentPage + 1,
         posts: [...state.posts, ...payload],
+        isError: false,
+        isLoading: false,
+      };
+    },
+    loadNextPostsPageFail(
+      state: ReturnType<typeof slice.initialState>,
+      { payload }: { payload: PostType[] }
+    ) {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
       };
     },
     selectPost(
@@ -56,7 +76,33 @@ export const slice: any = createSlice({
   },
 });
 
-export const { loadNexPostsPage, selectedPost, dismissPost, dismissAllPosts } =
-  slice.actions;
+export const {
+  loadNextPostsRequest,
+  loadNextPostsPageSuccess,
+  loadNextPostsPageFail,
+  selectedPost,
+  dismissPost,
+  dismissAllPosts,
+} = slice.actions;
+
+export const postsSelector = (state: ReturnType<typeof slice.initialState>) =>
+  state.posts;
 
 export default slice.reducer;
+
+export function fetchPosts() {
+  return async (dispatch: Function) => {
+    dispatch(loadNextPostsRequest());
+
+    try {
+      const response = await fetch("https://www.reddit.com/top.json?limit=50");
+      const {
+        data: { children },
+      } = await response.json();
+
+      dispatch(loadNextPostsPageSuccess(children));
+    } catch (error) {
+      dispatch(loadNextPostsPageFail());
+    }
+  };
+}
