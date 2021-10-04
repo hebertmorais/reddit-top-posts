@@ -2,6 +2,7 @@ import React from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import ContentViewer from "./ContentViewer";
 import PostsList from "./PostsList";
+import MockPost from "../../components/PostItem/__tests__/mockPost.json";
 
 function MainContent() {
   return (
@@ -11,15 +12,13 @@ function MainContent() {
       </Box>
 
       <Box
-        backgroundColor="white"
         borderRadius={8}
         width={{ base: "full", lg: "35%" }}
         height={{ base: "full", lg: "initial" }}
         position={{ base: "absolute", lg: "initial" }}
         margin={4}
-        padding={4}
       >
-        <ContentViewer />
+        <ContentViewer post={MockPost} />
       </Box>
     </Flex>
   );

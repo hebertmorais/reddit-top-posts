@@ -1,20 +1,61 @@
-import { Stack, Image, Heading, Text } from "@chakra-ui/react";
 import React from "react";
+import {
+  Tag,
+  Stack,
+  Image,
+  Heading,
+  Text,
+  Flex,
+  Avatar,
+} from "@chakra-ui/react";
+import { ChatIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import { capitalizeString } from "../../utils/common";
 
-function ContentViewer() {
+interface ContentViewerProps {
+  title: string;
+  author: string;
+  created_utc: number;
+  thumbnail: string;
+  num_comments: number;
+  ups: number;
+  subreddit: string;
+}
+
+function ContentViewer({ post }: { post: ContentViewerProps }) {
   return (
-    <Stack>
-      <Heading>New Post</Heading>
-      <Image src="http://b.thumbs.redditmedia.com/9N1f7UGKM5fPZydrsgbb4_SUyyLW7A27um1VOygY3LM.jpg" />
-      <Text>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum."
-      </Text>
+    <Stack
+      background="whiteAlpha.900"
+      padding={4}
+      marginTop={4}
+      borderRadius={4}
+      border="1px"
+      borderColor="gray.200"
+    >
+      <Flex direction="row" align="center">
+        <Avatar name={post.author} size="sm" />
+        <Text color="gray.500" padding={2} fontSize="sm">
+          Sent by<span>{post.author}</span> <span>2 hours ago</span>
+        </Text>
+      </Flex>
+      <Heading as="h2" fontSize="lg">
+        {post.title}
+      </Heading>
+      <Image src={post.thumbnail} alt={post.title} />
+      <Flex justify="space-around">
+        <Flex align="center">
+          <ChatIcon />
+          <Text marginLeft={1} fontSize="sm">
+            {post.num_comments} comments
+          </Text>
+        </Flex>
+        <Flex align="center" marginLeft={2}>
+          <ArrowUpIcon />
+          <Text marginLeft={1} fontSize="sm">
+            {post.ups} ups
+          </Text>
+        </Flex>
+        <Tag colorScheme="orange">{capitalizeString(post.subreddit)}</Tag>
+      </Flex>
     </Stack>
   );
 }
