@@ -6,13 +6,7 @@ import PostsList from "./PostsList";
 function MainContent() {
   return (
     <Flex width={{ base: "100%", lg: "1000px" }} height="100%">
-      <Box
-        backgroundColor="whiteAlpha.900"
-        borderRadius={8}
-        width={{ base: "100%", lg: "65%" }}
-        margin={4}
-        padding={4}
-      >
+      <Box width={{ base: "100%", lg: "65%" }} margin={4} padding={4}>
         <PostsList />
       </Box>
 
