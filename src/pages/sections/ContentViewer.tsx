@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Tag,
   Stack,
@@ -11,6 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { saveAs } from "file-saver";
+import Lightbox from "react-awesome-lightbox";
+// Required stylesheet
+import "react-awesome-lightbox/build/style.css";
 import { capitalizeString } from "../../utils/common";
 
 interface ContentViewerProps {
@@ -30,6 +33,7 @@ function ContentViewer({
   post: ContentViewerProps;
   onClose?: any;
 }) {
+  const [thumbnailOpen, setThumbnailOpen] = useState(false);
   const handleSaveImage = () => saveAs(post.thumbnail, `${post.title}.jpg`);
 
   return (
@@ -66,15 +70,32 @@ function ContentViewer({
         {post.title}
       </Heading>
       <Image src={post.thumbnail} alt={post.title} />
+
+      {thumbnailOpen && (
+        <Lightbox
+          image={post.thumbnail}
+          title={post.title}
+          onClose={() => setThumbnailOpen(false)}
+        />
+      )}
+
       {post.thumbnail && (
-        <Button
-          justifySelf="flex-end"
-          colorScheme="green"
-          variant="outline"
-          onClick={handleSaveImage}
-        >
-          Download Image
-        </Button>
+        <>
+          <Button
+            colorScheme="green"
+            variant="outline"
+            onClick={handleSaveImage}
+          >
+            Download Image
+          </Button>
+          <Button
+            colorScheme="orange"
+            variant="outline"
+            onClick={() => setThumbnailOpen(true)}
+          >
+            Zoom In
+          </Button>
+        </>
       )}
       <Flex justify="space-around">
         <Flex align="center">
