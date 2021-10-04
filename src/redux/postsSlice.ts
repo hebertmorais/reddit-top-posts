@@ -14,7 +14,7 @@ interface PostType {
 export const slice: any = createSlice({
   name: "posts",
   initialState: {
-    currentPage: 1,
+    lastItemId: "",
     posts: [],
     isLoading: false,
     isError: false,
@@ -30,12 +30,13 @@ export const slice: any = createSlice({
     },
     loadNextPostsPageSuccess(
       state: ReturnType<typeof slice.initialState>,
-      { payload }: { payload: PostType[] }
+      { payload }: { payload: any[] }
     ) {
       return {
         ...state,
         currentPage: state.currentPage + 1,
         posts: [...state.posts, ...payload],
+        lastItemId: payload[payload.length - 1].data.id,
         isError: false,
         isLoading: false,
       };
@@ -73,6 +74,7 @@ export const slice: any = createSlice({
         posts: state.posts.filter((post: any) => {
           return post.data.id !== payload;
         }),
+        lastItemId: state.posts.length === 1 ? "" : state.lastItemId,
       };
     },
     dismissAllPosts(state: ReturnType<typeof slice.initialState>) {
@@ -80,6 +82,7 @@ export const slice: any = createSlice({
         ...state,
         posts: [],
         selectedPost: null,
+        lastItemId: "",
       };
     },
   },
@@ -99,12 +102,14 @@ export const postsSelector = (state: ReturnType<typeof slice.initialState>) =>
 
 export default slice.reducer;
 
-export function fetchPosts() {
+export function fetchPosts(lastItemId: string) {
   return async (dispatch: Function) => {
     dispatch(loadNextPostsRequest());
-
+    const beforeQuery = lastItemId ? `&before=${lastItemId}` : "";
     try {
-      const response = await fetch("https://www.reddit.com/top.json?count=50");
+      const response = await fetch(
+        `https://www.reddit.com/top.json?count=50${beforeQuery}`
+      );
       const {
         data: { children },
       } = await response.json();

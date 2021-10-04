@@ -9,13 +9,15 @@ import {
   dismissPost,
 } from "../../redux/postsSlice";
 
+const MAX_POSTS_COUNT = 50;
+
 function PostsList() {
   const dispatch = useDispatch();
   const postsSelect = useSelector(postsSelector);
-  const { posts, isLoading, isError, readPosts } = postsSelect;
+  const { posts, isLoading, isError, readPosts, lastItemId } = postsSelect;
 
   useEffect(() => {
-    posts.length === 0 && dispatch(fetchPosts());
+    posts.length < MAX_POSTS_COUNT && dispatch(fetchPosts(lastItemId));
   }, []);
 
   const postWasRead = (postId: string) => {
