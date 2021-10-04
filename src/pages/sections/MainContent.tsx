@@ -11,7 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 
 function MainContent() {
-  const { posts, selectedPost } = useSelector(postsSelector);
+  const postsSelect = useSelector(postsSelector);
+  const { posts, selectedPost } = postsSelect;
   const dispatch = useDispatch();
 
   return (

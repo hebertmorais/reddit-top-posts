@@ -11,11 +11,12 @@ import {
 
 function PostsList() {
   const dispatch = useDispatch();
-  const { posts, isLoading, isError, readPosts } = useSelector(postsSelector);
+  const postsSelect = useSelector(postsSelector);
+  const { posts, isLoading, isError, readPosts } = postsSelect;
 
   useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
+    posts.length === 0 && dispatch(fetchPosts());
+  }, []);
 
   const postWasRead = (postId: string) => {
     return readPosts.includes(postId);

@@ -95,7 +95,7 @@ export const {
 } = slice.actions;
 
 export const postsSelector = (state: ReturnType<typeof slice.initialState>) =>
-  state.posts;
+  state;
 
 export default slice.reducer;
 
