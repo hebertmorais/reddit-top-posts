@@ -27,3 +27,4 @@ For this project it was used:
 - Redux with Redux toolkit and Redux-persist
 - Chakra UI
 - React Spring for animations
+- Date-fns
