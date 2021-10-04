@@ -21,6 +21,8 @@ Besides, you'll also be able to see in this project:
 - Support split layout (left side: all posts / right side: detail post)
 - Responsive design
 
+Plus you'll also be able to find some unit tests cases for most used components.
+
 For this project it was used:
 - React.js
 - Typescript
@@ -28,3 +30,4 @@ For this project it was used:
 - Chakra UI
 - React Spring for animations
 - Date-fns
+- Jest
