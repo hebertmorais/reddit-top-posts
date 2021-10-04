@@ -13,7 +13,7 @@ import { ChatIcon, ArrowUpIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { saveAs } from "file-saver";
 import Lightbox from "react-awesome-lightbox";
 import "react-awesome-lightbox/build/style.css";
-import { capitalizeString } from "../../utils/common";
+import { capitalizeString, getFormattedDateFromNow } from "../../utils/common";
 
 interface ContentViewerProps {
   title: string;
@@ -63,7 +63,8 @@ function ContentViewer({
       <Flex direction="row" align="center">
         <Avatar name={post.author} size="sm" />
         <Text color="gray.500" padding={2} fontSize="sm">
-          Sent by<span>{post.author}</span> <span>2 hours ago</span>
+          Sent by<span>{post.author}</span>{" "}
+          <span>{getFormattedDateFromNow(post.created_utc)}</span>
         </Text>
       </Flex>
       <Heading as="h2" fontSize="lg">

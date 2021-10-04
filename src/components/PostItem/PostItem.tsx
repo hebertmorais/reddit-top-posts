@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { ChatIcon, SmallCloseIcon } from "@chakra-ui/icons";
+import { getFormattedDateFromNow } from "../../utils/common";
 
 interface PostItemProps {
   title: string;
@@ -50,7 +51,8 @@ function PostItem({
           <Flex direction="row" align="center">
             <Avatar name={post.author} size="sm" />
             <Text color="gray.500" padding={2}>
-              Sent by<span>{post.author}</span> <span>2 hours ago</span>
+              Sent by<span>{post.author}</span>{" "}
+              <span>{getFormattedDateFromNow(post.created_utc)}</span>
             </Text>
             <Flex flex="1" justify="flex-end">
               <Button
