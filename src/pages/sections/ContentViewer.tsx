@@ -54,7 +54,9 @@ function ContentViewer({ post }: { post: ContentViewerProps }) {
             {post.ups} ups
           </Text>
         </Flex>
-        <Tag colorScheme="orange">{capitalizeString(post.subreddit)}</Tag>
+        {post.subreddit && (
+          <Tag colorScheme="orange">{capitalizeString(post.subreddit)}</Tag>
+        )}
       </Flex>
     </Stack>
   );

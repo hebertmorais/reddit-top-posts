@@ -19,6 +19,7 @@ export const slice: any = createSlice({
     isLoading: false,
     isError: false,
     selectedPost: null,
+    readPosts: [],
   },
   reducers: {
     loadNextPostsRequest(state: ReturnType<typeof slice.initialState>) {
@@ -39,10 +40,7 @@ export const slice: any = createSlice({
         isLoading: false,
       };
     },
-    loadNextPostsPageFail(
-      state: ReturnType<typeof slice.initialState>,
-      { payload }: { payload: PostType[] }
-    ) {
+    loadNextPostsPageFail(state: ReturnType<typeof slice.initialState>) {
       return {
         ...state,
         isLoading: false,
@@ -55,7 +53,10 @@ export const slice: any = createSlice({
     ) {
       return {
         ...state,
-        selectPost: payload,
+        selectedPost: payload,
+        readPosts: !state.readPosts.includes(payload.id)
+          ? [...state.readPosts, payload.id]
+          : state.readPosts,
       };
     },
     dismissPost(
@@ -80,7 +81,7 @@ export const {
   loadNextPostsRequest,
   loadNextPostsPageSuccess,
   loadNextPostsPageFail,
-  selectedPost,
+  selectPost,
   dismissPost,
   dismissAllPosts,
 } = slice.actions;
@@ -95,7 +96,7 @@ export function fetchPosts() {
     dispatch(loadNextPostsRequest());
 
     try {
-      const response = await fetch("https://www.reddit.com/top.json?limit=50");
+      const response = await fetch("https://www.reddit.com/top.json?count=50");
       const {
         data: { children },
       } = await response.json();
