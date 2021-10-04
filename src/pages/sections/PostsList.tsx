@@ -1,16 +1,22 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import PostItem from "../../components/PostItem";
-import MockPost from "../../components/PostItem/__tests__/mockPost.json";
+import { useDispatch, useSelector } from "react-redux";
+import { postsSelector, fetchPosts } from "../../redux/postsSlice";
 
 function PostsList() {
+  const dispatch = useDispatch();
+  const { posts, isLoading, isError } = useSelector(postsSelector);
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [dispatch, posts]);
+
   return (
     <Box>
-      {Array(10)
-        .fill(0)
-        .map((item) => (
-          <PostItem post={MockPost} read={false} />
-        ))}
+      {posts.map((post: any) => (
+        <PostItem key={post.id} post={post.data} read={false} />
+      ))}
     </Box>
   );
 }
