@@ -81,12 +81,14 @@ function PostsList() {
           </InfiniteScroll>
         </Box>
       ) : (
-        <Box>
-          <h1>You dismissed all posts</h1>
-          <Button onClick={() => getNextPage()} colorScheme="blue">
-            Fetch the posts again!
-          </Button>
-        </Box>
+        !isLoading && (
+          <Box>
+            <h1>You dismissed all posts</h1>
+            <Button onClick={() => getNextPage()} colorScheme="blue">
+              Fetch the posts again!
+            </Button>
+          </Box>
+        )
       )}
       {isLoading && <h1>Loading posts...</h1>}
     </>
