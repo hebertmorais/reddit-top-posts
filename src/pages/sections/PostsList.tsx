@@ -2,7 +2,12 @@ import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import PostItem from "../../components/PostItem";
 import { useDispatch, useSelector } from "react-redux";
-import { postsSelector, fetchPosts, selectPost } from "../../redux/postsSlice";
+import {
+  postsSelector,
+  fetchPosts,
+  selectPost,
+  dismissPost,
+} from "../../redux/postsSlice";
 
 function PostsList() {
   const dispatch = useDispatch();
@@ -22,6 +27,12 @@ function PostsList() {
           key={post.id}
           post={post.data}
           read={postWasRead(post.data.id)}
+          handleDismiss={(event: any) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            dispatch(dismissPost(post.data.id));
+          }}
           handleClick={() => {
             dispatch(selectPost(post.data));
           }}

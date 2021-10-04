@@ -66,13 +66,20 @@ export const slice: any = createSlice({
     ) {
       return {
         ...state,
-        posts: state.posts.filter((post: PostType) => post.id !== payload),
+        selectedPost:
+          state.selectedPost && state.selectedPost.id === payload
+            ? null
+            : state.selectedPost,
+        posts: state.posts.filter((post: any) => {
+          return post.data.id !== payload;
+        }),
       };
     },
     dismissAllPosts(state: ReturnType<typeof slice.initialState>) {
       return {
         ...state,
         posts: [],
+        selectedPost: null,
       };
     },
   },

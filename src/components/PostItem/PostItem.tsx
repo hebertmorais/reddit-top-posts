@@ -27,10 +27,12 @@ function PostItem({
   post,
   read = false,
   handleClick,
+  handleDismiss,
 }: {
   post: PostItemProps;
   read?: boolean;
   handleClick?: any;
+  handleDismiss?: any;
 }) {
   return (
     <LinkBox
@@ -59,6 +61,7 @@ function PostItem({
                 size="small"
                 padding={1}
                 borderRadius="full"
+                onClick={handleDismiss}
               >
                 Dismiss
               </Button>
