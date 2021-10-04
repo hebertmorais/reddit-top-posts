@@ -36,7 +36,7 @@ export const slice: any = createSlice({
         ...state,
         currentPage: state.currentPage + 1,
         posts: [...state.posts, ...payload],
-        lastItemId: payload[payload.length - 1].data.id,
+        lastItemId: payload[payload.length - 1].data.name,
         isError: false,
         isLoading: false,
       };
@@ -105,10 +105,10 @@ export default slice.reducer;
 export function fetchPosts(lastItemId: string) {
   return async (dispatch: Function) => {
     dispatch(loadNextPostsRequest());
-    const beforeQuery = lastItemId ? `&before=${lastItemId}` : "";
+    const afterQuery = lastItemId ? `&after=${lastItemId}` : "";
     try {
       const response = await fetch(
-        `https://www.reddit.com/top.json?count=50${beforeQuery}`
+        `https://www.reddit.com/top.json?limit=5${afterQuery}`
       );
       const {
         data: { children },
