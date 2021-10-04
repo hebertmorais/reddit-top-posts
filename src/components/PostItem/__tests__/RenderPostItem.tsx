@@ -25,13 +25,13 @@ describe("Assert items exist", function () {
 
   test("should render the number of comments", function () {
     render(<PostItem post={MockPost} />);
-    const commentsIndicator = screen.getByTestId("comments");
+    const commentsIndicator = screen.getByText("958 comments");
     expect(commentsIndicator).toBeInTheDocument();
   });
 
   test("should render the thumbnail", function () {
     render(<PostItem post={MockPost} />);
-    const postThumbnail = screen.getByRole("img");
+    const postThumbnail = screen.getByAltText(MockPost.title);
     expect(postThumbnail).toBeInTheDocument();
   });
 
