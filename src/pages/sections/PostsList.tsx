@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import PostItem from "../../components/PostItem";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useSpring, useTransition, animated } from "react-spring";
+
 import {
   postsSelector,
   fetchPosts,
@@ -21,6 +23,12 @@ function PostsList() {
     dispatch(fetchPosts(lastItemId));
   };
 
+  const transition = useTransition(posts, {
+    from: { opacity: 0, marginTop: 5 },
+    enter: { opacity: 1, maxHeight: 1000, marginTop: 5 },
+    leave: { opacity: 0, maxHeight: 0, marginTop: 0 },
+  });
+
   useEffect(() => {
     posts.length < MAX_POSTS_COUNT && getNextPage();
   }, []);
@@ -28,6 +36,28 @@ function PostsList() {
   const postWasRead = (postId: string) => {
     return readPosts.includes(postId);
   };
+
+  const fadeInListItems = transition((style, post) => {
+    return (
+      <animated.div style={style}>
+        <PostItem
+          key={post.id}
+          post={post.data}
+          read={postWasRead(post.data.id)}
+          handleDismiss={(event: any) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            dispatch(dismissPost(post.data.id));
+          }}
+          handleClick={() => {
+            dispatch(selectPost(post.data));
+          }}
+        />
+      </animated.div>
+    );
+  });
+
   return (
     <Box>
       <InfiniteScroll
@@ -41,22 +71,7 @@ function PostsList() {
           </p>
         }
       >
-        {posts.map((post: any) => (
-          <PostItem
-            key={post.id}
-            post={post.data}
-            read={postWasRead(post.data.id)}
-            handleDismiss={(event: any) => {
-              event.preventDefault();
-              event.stopPropagation();
-
-              dispatch(dismissPost(post.data.id));
-            }}
-            handleClick={() => {
-              dispatch(selectPost(post.data));
-            }}
-          />
-        ))}
+        {fadeInListItems}
       </InfiniteScroll>
     </Box>
   );
