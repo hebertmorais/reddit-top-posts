@@ -10,6 +10,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { ChatIcon, ArrowUpIcon, SmallCloseIcon } from "@chakra-ui/icons";
+import { saveAs } from "file-saver";
 import { capitalizeString } from "../../utils/common";
 
 interface ContentViewerProps {
@@ -29,6 +30,8 @@ function ContentViewer({
   post: ContentViewerProps;
   onClose?: any;
 }) {
+  const handleSaveImage = () => saveAs(post.thumbnail, `${post.title}.jpg`);
+
   return (
     <Stack
       background="whiteAlpha.900"
@@ -63,6 +66,16 @@ function ContentViewer({
         {post.title}
       </Heading>
       <Image src={post.thumbnail} alt={post.title} />
+      {post.thumbnail && (
+        <Button
+          justifySelf="flex-end"
+          colorScheme="green"
+          variant="outline"
+          onClick={handleSaveImage}
+        >
+          Download Image
+        </Button>
+      )}
       <Flex justify="space-around">
         <Flex align="center">
           <ChatIcon />
