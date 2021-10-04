@@ -42,13 +42,6 @@ describe("Assert items exist", function () {
     expect(formattedPostDate).toBeInTheDocument();
   });
 
-  test("should render the formatted date", function () {
-    render(<PostItem post={MockPost} />);
-    Date.now = jest.fn(() => 1419819714);
-    const formattedPostDate = screen.getByText("2 hours ago");
-    expect(formattedPostDate).toBeInTheDocument();
-  });
-
   test("should render the NEW tag if the post has not been read", function () {
     render(<PostItem post={MockPost} read={false} />);
     const newTag = screen.getByText("NEW");
