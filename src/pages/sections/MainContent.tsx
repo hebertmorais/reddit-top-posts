@@ -17,7 +17,7 @@ function MainContent() {
 
   return (
     <>
-      <Flex width={{ base: "100%", lg: "1200px" }} height="100%">
+      <Flex width={{ base: "100%", lg: "1200px" }} height="full">
         <Box width={{ base: "100%", lg: "65%" }} margin={4} padding={4}>
           <Flex flex="1">
             {posts.length > 0 && (
@@ -44,7 +44,7 @@ function MainContent() {
             width={{ base: "full", lg: "35%" }}
             height={{ base: "full", lg: "initial" }}
             position={{ base: "absolute", lg: "initial" }}
-            margin={4}
+            margin={{ base: 0, lg: 4 }}
           >
             <ContentViewer
               post={selectedPost}

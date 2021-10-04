@@ -12,7 +12,6 @@ import {
 import { ChatIcon, ArrowUpIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { saveAs } from "file-saver";
 import Lightbox from "react-awesome-lightbox";
-// Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import { capitalizeString } from "../../utils/common";
 
@@ -38,12 +37,13 @@ function ContentViewer({
 
   return (
     <Stack
-      background="whiteAlpha.900"
+      background="white"
       padding={4}
-      marginTop={4}
+      margin={{ base: 0, lg: 4 }}
       borderRadius={4}
       border="1px"
       borderColor="gray.200"
+      shadow="lg"
     >
       <Flex
         width="100%"
