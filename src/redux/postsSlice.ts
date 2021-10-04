@@ -20,12 +20,14 @@ export const slice: any = createSlice({
     isError: false,
     selectedPost: null,
     readPosts: [],
+    dismissedAll: false,
   },
   reducers: {
     loadNextPostsRequest(state: ReturnType<typeof slice.initialState>) {
       return {
         ...state,
         isLoading: true,
+        dismissedAll: false,
       };
     },
     loadNextPostsPageSuccess(
@@ -83,6 +85,7 @@ export const slice: any = createSlice({
         posts: [],
         selectedPost: null,
         lastItemId: "",
+        dismissedAll: true,
       };
     },
   },
